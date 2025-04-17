@@ -21,7 +21,7 @@ export default function ProgressBar({
         <motion.span 
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
-          key={currentQuestion}
+          key={`question-${currentQuestion}`}
           transition={{ duration: 0.3 }}
           className="flex items-center bg-blue-900/50 px-3 py-1 rounded-full"
         >
@@ -30,7 +30,7 @@ export default function ProgressBar({
         <motion.span 
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
-          key={progress}
+          key={`progress-${progress}`}
           transition={{ duration: 0.3 }}
           className="flex items-center bg-blue-900/50 px-3 py-1 rounded-full"
         >
@@ -67,7 +67,7 @@ export default function ProgressBar({
             
             return (
               <motion.div 
-                key={i}
+                key={`milestone-${i}-${currentQuestion}`}
                 className={`absolute top-1/2 transform -translate-y-1/2 w-2 h-2 rounded-full ${
                   isActive ? 'bg-white shadow-[0_0_5px_white]' : 'bg-white/30'
                 }`}

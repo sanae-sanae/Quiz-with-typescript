@@ -268,49 +268,73 @@ export default function Welcome() {
                   
                   <motion.div variants={itemVariants} className="space-y-2">
                     <Label htmlFor="category" className="text-white">Catégorie</Label>
-                    <Select
-                      value={quizParams.category?.toString() || "0"}
-                      onValueChange={(value) => handleParamChange("category", parseInt(value))}
-                      className="bg-white/10 border-white/20 text-white focus-visible:ring-blue-500"
-                    >
-                      <option value="0">Toute Catégorie</option>
-                      {TRIVIA_CATEGORIES.map((category) => (
-                        <option key={category.id} value={category.id.toString()}>
-                          {category.name}
-                        </option>
-                      ))}
-                    </Select>
+                    <div className="relative">
+                      <select
+                        id="category"
+                        value={quizParams.category?.toString() || "0"}
+                        onChange={(e) => handleParamChange("category", parseInt(e.target.value))}
+                        className="w-full py-2 px-3 rounded-md border border-white/20 bg-white/10 text-white shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none appearance-none"
+                      >
+                        <option value="0">Toute Catégorie</option>
+                        {TRIVIA_CATEGORIES.map((category) => (
+                          <option key={category.id} value={category.id.toString()}>
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-blue-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                      </div>
+                    </div>
                   </motion.div>
                   
                   <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="difficulty" className="text-white">Difficulté</Label>
-                      <Select
-                        value={quizParams.difficulty || ""}
-                        onValueChange={(value) => handleParamChange("difficulty", value)}
-                        className="bg-white/10 border-white/20 text-white focus-visible:ring-blue-500"
-                      >
-                        {DIFFICULTY_LEVELS.map((level) => (
-                          <option key={level.id} value={level.id}>
-                            {level.name}
-                          </option>
-                        ))}
-                      </Select>
+                      <div className="relative">
+                        <select
+                          id="difficulty"
+                          value={quizParams.difficulty || ""}
+                          onChange={(e) => handleParamChange("difficulty", e.target.value)}
+                          className="w-full py-2 px-3 rounded-md border border-white/20 bg-white/10 text-white shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none appearance-none"
+                        >
+                          {DIFFICULTY_LEVELS.map((level) => (
+                            <option key={level.id} value={level.id}>
+                              {level.name}
+                            </option>
+                          ))}
+                        </select>
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-blue-200">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="m6 9 6 6 6-6"/>
+                          </svg>
+                        </div>
+                      </div>
                     </div>
                     
                     <div className="space-y-2">
                       <Label htmlFor="type" className="text-white">Type de Question</Label>
-                      <Select
-                        value={quizParams.type || ""}
-                        onValueChange={(value) => handleParamChange("type", value)}
-                        className="bg-white/10 border-white/20 text-white focus-visible:ring-blue-500"
-                      >
-                        {QUESTION_TYPES.map((type) => (
-                          <option key={type.id} value={type.id}>
-                            {type.name}
-                          </option>
-                        ))}
-                      </Select>
+                      <div className="relative">
+                        <select
+                          id="type"
+                          value={quizParams.type || ""}
+                          onChange={(e) => handleParamChange("type", e.target.value)}
+                          className="w-full py-2 px-3 rounded-md border border-white/20 bg-white/10 text-white shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none appearance-none"
+                        >
+                          {QUESTION_TYPES.map((type) => (
+                            <option key={type.id} value={type.id}>
+                              {type.name}
+                            </option>
+                          ))}
+                        </select>
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-blue-200">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="m6 9 6 6 6-6"/>
+                          </svg>
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
                   
