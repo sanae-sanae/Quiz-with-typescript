@@ -24,21 +24,15 @@ export default function Welcome() {
   const [quizParams, setQuizParams] = useState<QuizParams>(DEFAULT_QUIZ_PARAMS);
   const [hasSavedProgress, setHasSavedProgress] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  
-  // Load saved progress if available
   useEffect(() => {
     const hasProgress = loadSavedProgress();
     setHasSavedProgress(hasProgress);
-    
-    // Try to play background music when component mounts
     if (backgroundMusic && !isMuted) {
       backgroundMusic.play().catch(error => {
         console.log("Autoplay prevented:", error);
       });
     }
   }, [loadSavedProgress, backgroundMusic, isMuted]);
-  
-  // Handle quiz start
   const handleStartQuiz = () => {
     if (!name.trim()) {
       toast.error("Veuillez entrer votre nom pour commencer le quiz", {
@@ -53,20 +47,14 @@ export default function Welcome() {
       });
       return;
     }
-    
-    // Set player name if not already set
     if (!isNameSet || playerName !== name) {
       setPlayerName(name);
     }
-    
-    // Store quiz parameters in URL search params
     const params = new URLSearchParams();
     params.append("amount", quizParams.amount.toString());
     if (quizParams.category) params.append("category", quizParams.category.toString());
     if (quizParams.difficulty) params.append("difficulty", quizParams.difficulty);
     if (quizParams.type) params.append("type", quizParams.type);
-    
-    // Add animation before navigating
     toast.success("Préparation du quiz...", {
       position: "top-center",
       duration: 1500,
@@ -77,14 +65,10 @@ export default function Welcome() {
       },
       icon: "🚀",
     });
-    
-    // Navigate to quiz after a short delay for animation
     setTimeout(() => {
       navigate(`/quiz?${params.toString()}`);
     }, 1000);
   };
-  
-  // Handle parameter changes
   const handleParamChange = (
     key: keyof QuizParams, 
     value: string | number
@@ -94,8 +78,6 @@ export default function Welcome() {
       [key]: value
     }));
   };
-  
-  // Animation variants for staggered children
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

@@ -24,11 +24,9 @@ export default function QuizResults() {
   } = useQuiz();
   
   const { playSuccess } = useAudio();
-  
-  // Get the latest quiz result
+
   const latestResult = quizHistory[quizHistory.length - 1];
   
-  // Calculate score if we have questions and answers
   const score = questions.length > 0 
     ? questions.reduce((acc, question) => {
         return acc + (answers[question.id] === question.correct_answer ? 1 : 0);
@@ -38,19 +36,18 @@ export default function QuizResults() {
   const totalQuestions = questions.length || latestResult?.totalQuestions || 0;
   const scorePercentage = Math.round((score / totalQuestions) * 100);
   
-  // Calculate time taken
+
   const timeTaken = startTime && endTime 
     ? Math.floor((endTime - startTime) / 1000) 
     : latestResult?.timeTaken || 0;
   
-  // Format time
+
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}m ${remainingSeconds}s`;
   };
-  
-  // Determine performance message
+
   const getPerformanceMessage = () => {
     if (scorePercentage >= 90) return "Excellent! You're a trivia master!";
     if (scorePercentage >= 70) return "Great job! You know your stuff!";
@@ -58,13 +55,11 @@ export default function QuizResults() {
     return "Keep learning! You'll do better next time!";
   };
   
-  // Play success sound on component mount
   useEffect(() => {
     if (scorePercentage >= 50) {
       playSuccess();
     }
     
-    // Redirect if no quiz completed
     if (!isQuizCompleted && quizHistory.length === 0) {
       navigate("/");
     }

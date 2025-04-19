@@ -3,14 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { useAudio } from "./lib/stores/useAudio";
 import { KeyboardControls } from "@react-three/drei";
 import { Toaster } from "sonner";
-
-// Lazy load components for better performance
 const Welcome = lazy(() => import("./components/Welcome"));
 const Quiz = lazy(() => import("./components/Quiz"));
 const QuizResults = lazy(() => import("./components/QuizResults"));
 const NotFound = lazy(() => import("./pages/not-found"));
-
-// Define keyboard controls for the 3D environment
 const controls = [
   { name: "forward", keys: ["KeyW", "ArrowUp"] },
   { name: "backward", keys: ["KeyS", "ArrowDown"] },
@@ -21,16 +17,11 @@ const controls = [
 
 function App() {
   const { setBackgroundMusic, setHitSound, setSuccessSound } = useAudio();
-
-  // Initialize audio elements
   useEffect(() => {
-    // Background music
     const bgMusic = new Audio("/sounds/background.mp3");
     bgMusic.loop = true;
     bgMusic.volume = 0.3;
     setBackgroundMusic(bgMusic);
-
-    // Sound effects
     const hit = new Audio("/sounds/hit.mp3");
     hit.volume = 0.5;
     setHitSound(hit);
@@ -58,7 +49,7 @@ function App() {
   );
 }
 
-// Simple loading screen while components are being loaded
+
 function LoadingScreen() {
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-indigo-900 to-blue-900">

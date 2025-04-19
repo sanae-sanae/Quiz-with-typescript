@@ -1,4 +1,4 @@
-// Question types based on the Trivia API response format
+
 export interface TriviaQuestion {
   category: string;
   type: string;
@@ -10,7 +10,7 @@ export interface TriviaQuestion {
 
 export interface ProcessedQuestion extends TriviaQuestion {
   id: number;
-  all_answers: string[]; // Shuffled array of all answers
+  all_answers: string[]; 
 }
 
 export interface QuizParams {
@@ -38,8 +38,6 @@ export interface QuizResults {
   timeTaken: number;
   date: string;
 }
-
-// Types for keyboard controls
 export enum Controls {
   forward = 'forward',
   backward = 'backward',

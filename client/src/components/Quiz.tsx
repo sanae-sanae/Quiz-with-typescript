@@ -16,16 +16,12 @@ import { Loader, LogOut, ChevronLeft, ChevronRight, CheckCircle, Clock, HelpCirc
 export default function Quiz() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  
-  // Parse quiz parameters from URL
   const quizParams: QuizParams = {
     amount: parseInt(searchParams.get("amount") || DEFAULT_QUIZ_PARAMS.amount.toString()),
     category: parseInt(searchParams.get("category") || "0") || undefined,
     difficulty: searchParams.get("difficulty") || undefined,
     type: searchParams.get("type") || undefined,
   };
-  
-  // Get quiz state from store
   const { 
     playerName, 
     isNameSet,
@@ -43,15 +39,10 @@ export default function Quiz() {
     isQuizCompleted,
     startTime
   } = useQuiz();
-  
-  // Get questions from API
+
   const { data, isLoading, error } = useTrivia(quizParams);
-  
-  // Local state for animation and timer
   const [isAnswerSelected, setIsAnswerSelected] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
-  
-  // Timer effect
   useEffect(() => {
     if (startTime && isQuizStarted && !isQuizCompleted) {
       const timer = setInterval(() => {
@@ -61,28 +52,20 @@ export default function Quiz() {
       return () => clearInterval(timer);
     }
   }, [startTime, isQuizStarted, isQuizCompleted]);
-  
-  // Format time for display
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
-  
-  // Redirect to welcome if no name is set
   useEffect(() => {
     if (!isNameSet) {
       navigate("/");
       return;
     }
-    
-    // If quiz is completed, navigate to results
     if (isQuizCompleted) {
       navigate("/results");
       return;
     }
-    
-    // Set questions if available
     if (data && !isLoading) {
       setQuestions(data);
       if (!isQuizStarted) {
@@ -99,8 +82,6 @@ export default function Quiz() {
     isQuizStarted,
     isQuizCompleted
   ]);
-  
-  // Handle API error
   useEffect(() => {
     if (error) {
       toast.error(`Erreur de chargement: ${error.message}`, {
@@ -115,16 +96,11 @@ export default function Quiz() {
       });
     }
   }, [error]);
-  
-  // Current question
   const currentQuestion = questions[currentQuestionIndex];
-  
-  // Handle answer selection
   const handleSelectAnswer = (answer: string) => {
     setIsAnswerSelected(true);
     selectAnswer(answer);
-    
-    // Feedback based on correctness
+
     if (answer === currentQuestion.correct_answer) {
       toast.success("Bonne réponse!", {
         position: "top-center",
@@ -148,19 +124,17 @@ export default function Quiz() {
         icon: "❌",
       });
     }
-    
-    // Short delay before allowing next question
+  
     setTimeout(() => {
       setIsAnswerSelected(false);
     }, 1000);
   };
-  
-  // Handle navigation to next question
+
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       goToNextQuestion();
     } else {
-      // On last question, show confirmation before submitting
+    
       toast.message("Souhaitez-vous terminer le quiz?", {
         position: "top-center",
         duration: 10000,
@@ -179,7 +153,6 @@ export default function Quiz() {
     }
   };
   
-  // Loading state with animated elements
   if (isLoading || !currentQuestion) {
     return (
       <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-indigo-950 to-black overflow-hidden">
@@ -224,11 +197,8 @@ export default function Quiz() {
       </div>
     );
   }
-  
-  // Calculate whether all questions have been answered
   const allQuestionsAnswered = questions.every((q) => answers[q.id]);
-  
-  // Determine difficulty color
+
   const getDifficultyColor = () => {
     switch (currentQuestion.difficulty) {
       case 'easy': return 'bg-green-500';
